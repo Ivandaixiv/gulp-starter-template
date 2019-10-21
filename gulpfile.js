@@ -7,19 +7,21 @@ const gulp = require("gulp"),
 
 gulp.task("lint", function(){
     return gulp
-        .src("./js/*.js")
-        .pipe(eslint())
-        .pipe(eslint.format())
-        .pipe(eslint.failAfterError())
+    .src("./js/*.js")
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
 });
 
-gulp.task("scripts", function() {
-  return gulp
-    .src("./js/*.js")
-    .pipe(terser())
-    .pipe(rename({ extname: ".min.js" }))
-    .pipe(gulp.dest("./build/js"));
-});
+gulp.task("scripts", gulp.series("lint",
+    function scripts() {
+        return gulp
+        .src("./js/*.js")
+        .pipe(terser())
+        .pipe(rename({ extname: ".min.js" }))
+        .pipe(gulp.dest("./build/js"));
+    })
+);
 
 gulp.task("say_hello", function(done) {
   console.log("Hello!");
