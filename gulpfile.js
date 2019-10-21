@@ -1,8 +1,17 @@
 const gulp = require("gulp"),
   terser = require("gulp-terser"),
   rename = require("gulp-rename"),
-  browserSync = require("browser-sync").create();
+  browserSync = require("browser-sync").create(),
+  eslint = require("gulp-eslint");
 
+
+gulp.task("lint", function(){
+    return gulp
+        .src("./js/*.js")
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError())
+});
 
 gulp.task("scripts", function() {
   return gulp
