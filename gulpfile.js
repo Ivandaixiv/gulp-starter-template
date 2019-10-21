@@ -22,12 +22,6 @@ gulp.task("scripts", gulp.series("lint",
         .pipe(gulp.dest("./build/js"));
     })
 );
-
-gulp.task("say_hello", function(done) {
-  console.log("Hello!");
-  done();
-});
-
 // Static server
 gulp.task('browser-sync', function() {
     browserSync.init({
@@ -43,13 +37,19 @@ gulp.task("watch", function() {
     gulp.watch("js/*.js", gulp.series("scripts"));
 });
 
+gulp.task("default", gulp.parallel("browser-sync", "watch"));
+
+
+// gulp.task("say_hello", function(done) {
+//     console.log("Hello!");
+//     done();
+//   });
+  
 // gulp.task('browser-sync', function() {
 //     browserSync.init({
 //         proxy: "yourlocal.dev"
 //     });
 // });
-
-gulp.task("default", gulp.parallel("scripts","browser-sync"));
 
 // const gulp = require("gulp"); // Load Gulp!
 // // Now that we've installed the terser package we can require it:
