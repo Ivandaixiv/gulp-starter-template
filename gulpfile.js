@@ -2,8 +2,26 @@ const gulp = require("gulp"),
   terser = require("gulp-terser"),
   rename = require("gulp-rename"),
   browserSync = require("browser-sync").create(),
-  eslint = require("gulp-eslint");
+  eslint = require("gulp-eslint"),
+  sass = require("gulp-sass"),
+  autoprefixer = require('gulp-autoprefixer'),
+  cssnano = require('gulp-cssnano');
 
+
+gulp.task('sass', function() {
+    return gulp
+    .src('./sass/style.scss')
+    .pipe(sass())
+    .pipe(
+    autoprefixer({
+        browsers: ['last 2 versions'],
+    }),
+    )
+    .pipe(gulp.dest('./build/css'))
+    .pipe(cssnano())
+    .pipe(rename('style.min.css'))
+    .pipe(gulp.dest('./build/css'));
+});
 
 gulp.task("lint", function(){
     return gulp
